@@ -1,30 +1,57 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useEffect } from "react";
 
-const MovieForm = ({onMovieAdded})=>{
+const MovieForm = ({onMovieAdded,editingMovie,clearEditing})=>{
     const [title,setTitle] = useState("")
     const [genre,setGenre] = useState("")
     const [rating,setRating] = useState("")
     const [description,setDescription] = useState("")
     const [watched,setWatched] = useState(false)
 
+    useEffect(()=>{
+        if(editingMovie){
+            setTitle(editingMovie.title||"")
+            setGenre(editingMovie.genre||"")
+            setRating(editingMovie.rating||"")
+            setDescription(editingMovie.description||"")
+            setWatched(editingMovie.watched||false)
+        }
+    },[editingMovie])
+
     const handleSubmit = async(e)=>{
         e.preventDefault()
+
+        const movieData = {
+         title,
+         genre,
+         rating: Number(rating),
+         description,
+         watched
+        }
         try{
-            await axios.post('http://localhost:3000/api/movies',{title,genre,rating: Number(rating),description,watched})
+            if(editingMovie){
+                await axios.put(`http://localhost:3000/api/movies/${editingMovie_id}`, movieData)
+                clearEditing("")
+            }else{
+                await axios.post('http://localhost:3000/api/movies',{title,genre,rating: Number(rating),description,watched})
+            }
+
             setTitle("")
             setGenre("")
             setDescription("")
             setRating("")
             setWatched(false)
             onMovieAdded()
+            
         }catch(error){
-            console.error(error)
+            console.error('Error saving movie:', err)
         }
     }
 
     return (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
         <form action="Submit" onSubmit={handleSubmit}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '300px' }}>
             <input
@@ -63,9 +90,16 @@ const MovieForm = ({onMovieAdded})=>{
                 />
                 Did you watch this?
               </label>
-              <button type="submit">Add Movie</button>
+              <button type="submit">{editingMovie ? 'Update Movie' : 'Add Movie'}</button>
+               {editingMovie && (
+                   <button type="button" onClick={clearEditing} style={{ backgroundColor: 'lightgray' }}>
+                    Cancel
+                   </button>
+                )}
+              
               </div>
         </form>
+        </div>
     )
 }
 

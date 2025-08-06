@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 
-const MovieList = ({movies,onDelete})=>{
+const MovieList = ({movies,onDelete,onEdit})=>{
     
     return (
         <div>
@@ -13,6 +13,7 @@ const MovieList = ({movies,onDelete})=>{
                         <li key = {movie._id}>
                             <strong>{movie.title}</strong> — {movie.genre} — Rating: {movie.rating}
                             <button onClick={() => onDelete(movie._id)} style={{ marginLeft: '10px' }}>Delete Movie</button>
+                            <button onClick={() => onEdit(movie)}>Edit Movie</button>
                         </li>
                     ) )}
                 </ul>

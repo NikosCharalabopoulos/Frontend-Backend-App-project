@@ -8,6 +8,8 @@ import './App.css'
 
 function App() {
   const [movies, setMovies] = useState([])
+  const [editingMovie, setEditingMovie] = useState(null);
+
 
   const fetchMovies = ()=>{
         axios.get('http://localhost:3000/api/movies')
@@ -35,7 +37,7 @@ function App() {
   return (
     <div className='App'>
       <h1>🎬 Movie Tracker</h1>
-      <MovieForm onMovieAdded={fetchMovies}/>
+      <MovieForm onMovieAdded={fetchMovies} editingMovie={editingMovie} clearEditing={()=>setEditingMovie(null)}/>
      <MovieList movies={movies} onDelete={handleDelete}/>
     </div>
   )
