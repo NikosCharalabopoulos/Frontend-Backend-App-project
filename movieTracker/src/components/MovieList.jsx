@@ -11,7 +11,7 @@ const MovieList = ({movies,onDelete,onEdit})=>{
                 <ul>
                     {movies.map(movie =>(
                         <li key = {movie._id}>
-                            <strong>{movie.title}</strong> — {movie.genre} — Rating: {movie.rating}
+                            <strong>{movie.title}</strong> — {movie.genre} — Rating: {movie.rating} — {movie.watched ? '✅ Watched' : '❌ Not Watched'}
                             <button onClick={() => onDelete(movie._id)} style={{ marginLeft: '10px' }}>Delete Movie</button>
                             <button onClick={() => onEdit(movie)}>Edit Movie</button>
                         </li>

@@ -32,7 +32,7 @@ const MovieForm = ({onMovieAdded,editingMovie,clearEditing})=>{
         }
         try{
             if(editingMovie){
-                await axios.put(`http://localhost:3000/api/movies/${editingMovie_id}`, movieData)
+                await axios.put(`http://localhost:3000/api/movies/${editingMovie._id}`, movieData)
                 clearEditing("")
             }else{
                 await axios.post('http://localhost:3000/api/movies',{title,genre,rating: Number(rating),description,watched})
@@ -46,7 +46,7 @@ const MovieForm = ({onMovieAdded,editingMovie,clearEditing})=>{
             onMovieAdded()
             
         }catch(error){
-            console.error('Error saving movie:', err)
+            console.error('Error saving movie:', error)
         }
     }
 

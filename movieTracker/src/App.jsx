@@ -10,6 +10,7 @@ function App() {
   const [movies, setMovies] = useState([])
   const [editingMovie, setEditingMovie] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState('All')
+  const [searchTerm,setSearchTerm] = useState("")
 
 
   const fetchMovies = ()=>{
@@ -34,11 +35,15 @@ function App() {
     }
   }
 
-  const filteredMovies = selectedGenre === 'All'
-  ? movies
-  : movies.filter((movie) =>
-      movie.genre && movie.genre.toLowerCase().includes(selectedGenre.toLowerCase())
-    );
+  const filteredMovies = movies.filter((movie)=>{
+    const matchesGenre = selectedGenre === "All" ||
+    (movie.genre && movie.genre.toLowerCase().includes(selectedGenre.toLowerCase()))
+
+    const matchesSearch = 
+    movie.title && movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+
+    return matchesGenre && matchesSearch
+  })
 
 
 
@@ -46,6 +51,19 @@ function App() {
     <div className='App'>
       <h1>🎬 Movie Tracker</h1>
       <MovieForm onMovieAdded={fetchMovies} editingMovie={editingMovie} clearEditing={()=>setEditingMovie(null)}/>
+
+        <div style={{ marginBottom: '10px' }}>
+            <label htmlFor="search">🔎 Search by Title:</label>
+            <input
+               type="text"
+               id="search"
+               value={searchTerm}
+               onChange={(e) => setSearchTerm(e.target.value)}
+               placeholder="e.g. Joker"
+               style={{ marginLeft: '10px', padding: '4px', width: '200px' }}
+            />
+        </div>
+
 
         <div style={{ marginBottom: '20px' }}>
           <label htmlFor="genreFilter">🎯 Filter by Genre:</label>
