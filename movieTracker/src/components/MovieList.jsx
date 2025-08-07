@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 
-const MovieList = ({movies,onDelete,onEdit})=>{
+const MovieList = ({movies,onDelete,onEdit,onToggleWatched})=>{
     
     return (
         <div>
@@ -11,7 +11,15 @@ const MovieList = ({movies,onDelete,onEdit})=>{
                 <ul>
                     {movies.map(movie =>(
                         <li key = {movie._id}>
-                            <strong>{movie.title}</strong> — {movie.genre} — Rating: {movie.rating} — {movie.watched ? '✅ Watched' : '❌ Not Watched'}
+                            <strong>{movie.title}</strong> — {movie.genre} — Rating: {movie.rating}
+                            <label style={{ marginLeft: '10px' }}>
+                                <input
+                                type="checkbox"
+                                checked={movie.watched}
+                                onChange={() => onToggleWatched(movie)}
+                                />
+                                {movie.watched ? 'Watched' : 'Not Watched'}
+                            </label>
                             <button onClick={() => onDelete(movie._id)} style={{ marginLeft: '10px' }}>Delete Movie</button>
                             <button onClick={() => onEdit(movie)}>Edit Movie</button>
                         </li>

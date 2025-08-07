@@ -35,6 +35,20 @@ function App() {
     }
   }
 
+
+  const handleToggleWatched = async(movie)=>{
+    try{
+      await axios.put(`http://localhost:3000/api/movies/${movie._id}`,
+        {...movie,
+          watched: !movie.watched,
+        }
+      )
+      fetchMovies()
+       }catch(error){
+         console.error('Error toggling watched status:', error)
+       }
+   }
+
   const filteredMovies = movies.filter((movie)=>{
     const matchesGenre = selectedGenre === "All" ||
     (movie.genre && movie.genre.toLowerCase().includes(selectedGenre.toLowerCase()))
@@ -86,7 +100,7 @@ function App() {
           </select>
         </div>
 
-     <MovieList movies={filteredMovies} onDelete={handleDelete} onEdit={(movie) => setEditingMovie(movie)}/>
+     <MovieList movies={filteredMovies} onDelete={handleDelete} onEdit={(movie) => setEditingMovie(movie)} onToggleWatched={handleToggleWatched}/>
     </div>
   )
 }
