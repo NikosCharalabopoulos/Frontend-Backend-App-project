@@ -4,6 +4,7 @@ import axios from 'axios'
 import MovieList from './components/MovieList'
 import MovieForm from './components/MovieForm'
 import OnlineSearch from './components/OnlineSearch'
+import FilterBar from './components/filterBar'
 import './App.css'
 
 
@@ -67,43 +68,31 @@ function App() {
     <div className="App">
     
       <h1>🎬 Movie Tracker</h1>
-      <MovieForm onMovieAdded={fetchMovies} editingMovie={editingMovie} clearEditing={()=>setEditingMovie(null)}/>
 
-        <OnlineSearch onMovieAdded={fetchMovies} />
+      <MovieForm 
+      onMovieAdded={fetchMovies} 
+      editingMovie={editingMovie} 
+      clearEditing={()=>setEditingMovie(null)}
+      />
 
-        
-        <div className="toolbar">
-  <div className="field">🔎
-    <input
-      type="text"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      placeholder="Search by title"
-    />
-  </div>
-  <div className="field">🎯
-    <select
-      value={selectedGenre}
-      onChange={(e) => setSelectedGenre(e.target.value)}
-    >
-      <option value="All">All</option>
-      <option value="Sci-Fi">Sci-Fi</option>
-      <option value="Comedy">Comedy</option>
-      <option value="Drama">Drama</option>
-      <option value="Thriller">Thriller</option>
-      <option value="Animation">Animation</option>
-      <option value="Biography">Biography</option>
-      <option value="Adventure">Adventure</option>
-      <option value="Crime">Crime</option>
-      <option value="Fantasy">Fantasy</option>
-    </select>
-  </div>
-</div>
+      <OnlineSearch onMovieAdded={fetchMovies} />
 
+      <FilterBar
+      searchTerm={searchTerm}
+      onSearchChange={setSearchTerm}
+      selectedGenre={selectedGenre}
+      onGenreChange={setSelectedGenre}
+      />
 
-     <MovieList movies={filteredMovies} onDelete={handleDelete} onEdit={(movie) => setEditingMovie(movie)} onToggleWatched={handleToggleWatched}/>
+    
+     <MovieList 
+     movies={filteredMovies} 
+     onDelete={handleDelete} 
+     onEdit={(movie) => setEditingMovie(movie)} 
+     onToggleWatched={handleToggleWatched}
+     />
    
-    </div>
+   </div>
   )
 }
 
