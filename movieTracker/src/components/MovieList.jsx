@@ -25,7 +25,7 @@ const MovieList = ({movies,onDelete,onEdit,onToggleWatched})=>{
             type="checkbox"
             checked={movie.watched}
             onChange={() => onToggleWatched(movie)}
-          /> Toggle
+          /> Watched
         </label>
         <button className="danger" onClick={() => onDelete(movie._id)}>Delete</button>
         <button className="ghost" onClick={() => onEdit(movie)}>Edit</button>
