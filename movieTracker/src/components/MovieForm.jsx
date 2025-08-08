@@ -51,9 +51,9 @@ const MovieForm = ({onMovieAdded,editingMovie,clearEditing})=>{
     }
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="card">
         <form action="Submit" onSubmit={handleSubmit}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '300px' }}>
+            
             <input
               value = {title}
               onChange={e=>setTitle(e.target.value)}
@@ -90,14 +90,14 @@ const MovieForm = ({onMovieAdded,editingMovie,clearEditing})=>{
                 />
                 Did you watch this?
               </label>
-              <button type="submit">{editingMovie ? 'Update Movie' : 'Add Movie'}</button>
+              <button type="submit" className="primary">{editingMovie ? 'Update Movie' : 'Add Movie'}</button>
                {editingMovie && (
-                   <button type="button" onClick={clearEditing} style={{ backgroundColor: 'lightgray' }}>
+                   <button type="button" onClick={clearEditing} className="ghost">
                     Cancel
                    </button>
                 )}
               
-              </div>
+              
         </form>
         </div>
     )

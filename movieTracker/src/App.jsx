@@ -64,47 +64,45 @@ function App() {
 
 
   return (
-    <div className='App'>
+    <div className="App">
+    
       <h1>🎬 Movie Tracker</h1>
       <MovieForm onMovieAdded={fetchMovies} editingMovie={editingMovie} clearEditing={()=>setEditingMovie(null)}/>
 
         <OnlineSearch onMovieAdded={fetchMovies} />
 
-        <div style={{ marginBottom: '10px' }}>
-            <label htmlFor="search">🔎 Search by Title:</label>
-            <input
-               type="text"
-               id="search"
-               value={searchTerm}
-               onChange={(e) => setSearchTerm(e.target.value)}
-               placeholder="e.g. Joker"
-               style={{ marginLeft: '10px', padding: '4px', width: '200px' }}
-            />
-        </div>
+        
+        <div className="toolbar">
+  <div className="field">🔎
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="Search by title"
+    />
+  </div>
+  <div className="field">🎯
+    <select
+      value={selectedGenre}
+      onChange={(e) => setSelectedGenre(e.target.value)}
+    >
+      <option value="All">All</option>
+      <option value="Sci-Fi">Sci-Fi</option>
+      <option value="Comedy">Comedy</option>
+      <option value="Drama">Drama</option>
+      <option value="Thriller">Thriller</option>
+      <option value="Animation">Animation</option>
+      <option value="Biography">Biography</option>
+      <option value="Adventure">Adventure</option>
+      <option value="Crime">Crime</option>
+      <option value="Fantasy">Fantasy</option>
+    </select>
+  </div>
+</div>
 
-
-        <div style={{ marginBottom: '20px' }}>
-          <label htmlFor="genreFilter">🎯 Filter by Genre:</label>
-           <select
-             id="genreFilter"
-             value={selectedGenre}
-             onChange={(e) => setSelectedGenre(e.target.value)}
-             style={{ marginLeft: '10px' }}
-            >
-           <option value="All">All</option>
-           <option value="Sci-Fi">Sci-Fi</option>
-           <option value="Comedy">Comedy</option>
-           <option value="Drama">Drama</option>
-           <option value="Thriller">Thriller</option>
-           <option value="Animation">Animation</option>
-           <option value="Biography">Biography</option>
-           <option value="Adventure">Adventure</option>
-           <option value="Crime">Crime</option>
-           <option value="Fantasy">Fantasy</option>
-          </select>
-        </div>
 
      <MovieList movies={filteredMovies} onDelete={handleDelete} onEdit={(movie) => setEditingMovie(movie)} onToggleWatched={handleToggleWatched}/>
+   
     </div>
   )
 }
