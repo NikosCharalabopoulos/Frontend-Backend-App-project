@@ -1,11 +1,19 @@
 import React from "react";
-import { useState } from "react";
+import { useState} from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
 const OnlineSearch = ({onMovieAdded}) => {
 
     const [apiQuery, setApiQuery] = useState('')
     const [apiResults, setApiResults] = useState([])
+
+    useEffect(() => {
+       if (!apiQuery.trim()) {
+         setApiResults([]); 
+       }
+    }, [apiQuery])
+
 
     const searchOnline = async()=>{
         if (!apiQuery.trim()) return
