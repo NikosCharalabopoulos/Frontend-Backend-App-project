@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import MovieList from './components/MovieList'
 import MovieForm from './components/MovieForm'
+import OnlineSearch from './components/OnlineSearch'
 import './App.css'
 
 
@@ -11,10 +12,7 @@ function App() {
   const [editingMovie, setEditingMovie] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState('All')
   const [searchTerm,setSearchTerm] = useState("")
-  const [apiQuery, setApiQuery] = useState('');
-  const [apiResults, setApiResults] = useState([]);
-
-
+  
 
   const fetchMovies = ()=>{
         axios.get('http://localhost:3000/api/movies')
@@ -52,17 +50,6 @@ function App() {
        }
    }
 
-   const searchOnline = async () => {
-     if (!apiQuery.trim()) return;
-      try {
-        const res = await axios.get(`http://localhost:3000/api/external/search?q=${encodeURIComponent(apiQuery)}`);
-        setApiResults(res.data);
-      } catch (e) {
-       console.error(e);
-       setApiResults([]);
-      }
-  };
-
 
   const filteredMovies = movies.filter((movie)=>{
     const matchesGenre = selectedGenre === "All" ||
@@ -81,16 +68,7 @@ function App() {
       <h1>🎬 Movie Tracker</h1>
       <MovieForm onMovieAdded={fetchMovies} editingMovie={editingMovie} clearEditing={()=>setEditingMovie(null)}/>
 
-        <div style={{ margin: '20px 0' }}>
-           <label>🌐 Search online:</label>
-           <input
-             value={apiQuery}
-             onChange={(e) => setApiQuery(e.target.value)}
-             placeholder="e.g. Inception"
-             style={{ marginLeft: 10, padding: 4, width: 220 }}
-           />
-           <button onClick={searchOnline} style={{ marginLeft: 8 }}>Search</button>
-        </div>
+        <OnlineSearch onMovieAdded={fetchMovies} />
 
         <div style={{ marginBottom: '10px' }}>
             <label htmlFor="search">🔎 Search by Title:</label>
